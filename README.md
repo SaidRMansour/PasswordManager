@@ -44,6 +44,40 @@ After downloading .NET 8.0, Mac users need to ensure that Visual Studio uses the
 
 By following these instructions, you should be able to run and debug the application successfully on your machine.
 
+## Application Workflow
+
+The Password Manager's operation hinges on the presence of a `master_user.json` file within the solution directory. This file is pivotal for several reasons:
+
+- **Master User Determination**: If the `master_user.json` file exists, it indicates that the master username and password have been set. Should this file be deleted or if it doesn't exist, the first login credentials entered are deemed as those of the master user.
+- **Password Storage**: The application stores all encrypted passwords in this JSON file alongside their respective Initialization Vector (IV).
+- **Encryption Key Storage**: Uniquely, the encryption key is stored only within the session. Once logged out, the encryption key is eradicated, enhancing security by ensuring that encryption keys are not persistently stored.
+
+### Known Value Utilization
+
+A specific constant, `private const string knownValue = "Secret123!1!";`, plays a crucial role in the verification process:
+
+- **Encryption and Decryption Verification**: This known value is used to verify the encryption and decryption processes. When initializing or verifying the master user, the application encrypts this known value using the derived key. If the decryption of this value matches the original, it confirms the validity of the master password.
+- **Security Assurance**: By encrypting and successfully decrypting a known value, we ensure that the encryption mechanism is functioning correctly and that the master user's credentials are valid.
+
+## Pitfalls
+
+One potential security concern within the Password Manager application relates to the "Show Passwords" feature. Specifically, this feature presents a challenge as it temporarily displays the plaintext passwords within the HTML file. Consequently, if a user were to open the developer tools in their browser, they could potentially see the passwords in plaintext.
+
+### Mitigation Strategies:
+
+Despite this concern, it's essential to highlight the security measures in place to mitigate unauthorized access:
+
+- **Session Verification**: The application requires session verification before allowing access to the "Show Passwords" feature. It checks for a valid encryption key stored in the session. If the key exists and is validated, it confirms that the user has been authenticated and authorized to view the passwords.
+- **User Verification**: Only verified users who have successfully logged in can access the encrypted passwords. This step ensures that the visibility of plaintext passwords in the HTML file is restricted to users who have already been authenticated.
+
+### Considerations:
+
+- **User's Responsibility**: While the application ensures that only authenticated users can view the passwords, it's also the user's responsibility to ensure that their device is secure and that they are using the application in a safe environment, especially when accessing developer tools or inspecting HTML elements.
+- **Enhanced Security Measures**: Future versions of the application could explore additional security measures to further obscure passwords when displayed, such as masking displayed passwords by default and providing an explicit user action to temporarily reveal them.
+
+This pitfall underscores the importance of balancing usability with security. While providing users the ability to view their passwords in plaintext is a valuable feature for usability, it also necessitates stringent security measures to ensure that such functionality does not compromise the overall security of the user's data.
+
+
 # Screenshots of the product
 ### Login Page
 <img width="427" alt="Skærmbillede 2024-03-17 kl  15 39 05" src="https://github.com/SaidRMansour/PasswordManager/assets/95212978/bd7004af-d918-45f9-a728-0268bd3cdabf">
@@ -147,15 +181,4 @@ In this demo, a real database will not be used. Instead, a **JSON file**, which 
 ***
 ![decrypt](https://github.com/SaidRMansour/PasswordManager/assets/95212978/579fb495-2b21-4551-a441-20b8105d4da1)
 
-### Gui overview (idea)
-***
-![Gui_2](https://github.com/SaidRMansour/PasswordManager/assets/95212978/f6e89f60-f46b-4520-b2c6-396cf0c34815)
 
-
-## Conclusion
-
-Our Password Manager prioritizes robust security through advanced encryption, rigorous key management, and strategic security measures to protect against unauthorized access and threats. Utilizing the Advanced Encryption Standard (AES) and dynamic key generation with PBKDF2, we ensure data integrity and confidentiality. Our system enhances security with HTTPOnly cookies and session timeouts, alongside a built-in password generator for creating secure passwords.
-
-We're committed to defending against the OWASP Top 10 vulnerabilities, continuously updating our security practices in response to emerging threats. This commitment ensures our platform remains a secure environment for our users' sensitive information.
-
-The design of our Password Manager is tailored to counter a wide range of cyber threats, maintaining a vigilant and adaptive security posture. Our focus on delivering a secure platform underscores our dedication to user trust and data protection, positioning our Password Manager as a standard-bearer in data security.
