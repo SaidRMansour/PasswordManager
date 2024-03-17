@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>You are now in!</p>
+<br />
+<p>Welcome <b>@ViewBag.Username</b></p>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Dashboard Menu Item 1 -->
+        <div class="col-sm">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Dashboard</h5>
+                    <p class="card-text">View your dashboard overview.</p>
+                    <a href="@Url.Action("Dashboard", "Home")" class="btn btn-primary">Go</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Menu Item 2 -->
+        <div class="col-sm">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Add Password</h5>
+                    <p class="card-text">Add a new password.</p>
+                    <a href="@Url.Action("AddPasswordView", "Home")" class="btn btn-primary">Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-4">
+
+    <div class="row">
+        <!-- Dashboard Menu Item 3 -->
+        <div class="col-sm">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Show Passwords</h5>
+                    <p class="card-text">View and manage your passwords.</p>
+                    <a href="@Url.Action("ShowPasswords", "Home")" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Menu Item 4 -->
+        <div class="col-sm">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Generate Password</h5>
+                    <p class="card-text">Create a strong password.</p>
+                    <a href="@Url.Action("GeneratePasswordView", "Home")" class="btn btn-primary">Generate</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" id="success-alert">
+            @TempData["SuccessMessage"]
+        </div>
+
+        <script>$(document).ready(function () {
+                setTimeout(function () {
+                    $("#success-alert").fadeOut('slow');
+                }, 5000); // 5 sec
+            });</script>
+    }
+
+</div>
+
