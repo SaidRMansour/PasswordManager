@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .dashboard-sidebar {
+            min-width: 20%;
+            max-width: 20%;
+            height: 100vh;
+            background-color: #222529;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+        }
+
+        .sidebar-sticky {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .nav-link {
+            color: #fff;
+            padding: 1rem;
+        }
+
+            .nav-link.active {
+                color: #007bff;
+            }
+
+            .nav-link .fa {
+                margin-right: 0.5em;
+            }
+
+        .nav {
+            align-content: center;
+            text-align: left;
+            margin-top: 1em;
+        }
+        .nav-item{
+            margin: 1em;
+        }
+        .nav-icon {
+            margin-right: 1em; 
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+        .sidebar-user-name {
+            text-align: center;
+            margin-bottom: 2em;
+        }
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: 4em; 
+            margin-top: 1em;
+        }
+
+            .sidebar-logo img {
+                width: 250px;
+                height: auto;
+            }
+
+        .white-color-text{
+            color:#fff;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="dashboard-sidebar">
+        <div class="sidebar-sticky d-flex flex-column">
+            <div class="sidebar-logo">
+                <img src="~/Images/newLogo.png" />
+            </div>
+            <div class="sidebar-user-name">
+                <img width="48" height="48" src="~/Images/User.png" />
+                <p class="white-color-text">@ViewBag.Username</p>
+            </div>
+            @{
+                var currentController = ViewContext.RouteData.Values["controller"].ToString();
+                var currentAction = ViewContext.RouteData.Values["action"].ToString();
+            }
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "Dashboard" && currentController == "Home" ? "active" : "")"
+                       href="@Url.Action("Dashboard", "Home")">
+                        <img class="nav-icon" src="https://img.icons8.com/ios/50/FFFFFF/control-panel--v2.png" />Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "AddPasswordView" ? "active" : "")"
+                       href="@Url.Action("AddPasswordView", "Home")">
+                        <img class="nav-icon" src="https://img.icons8.com/ios/50/FFFFFF/plus-math--v2.png" />Add password
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "ShowPasswords" ? "active" : "")"
+                       href="@Url.Action("ShowPasswords", "Home")">
+                        <img class="nav-icon" src="https://img.icons8.com/ios/50/FFFFFF/show-password.png" />Show password
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(currentAction == "GeneratePasswordView" ? "active" : "")"
+                       href="@Url.Action("GeneratePasswordView", "Home")">
+                        <img class="nav-icon" src="https://img.icons8.com/ios/50/FFFFFF/re-enter-pincode.png" />Generate password
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-bottom">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Logout","Home")"><img class="nav-icon" width="25" height="25" src="https://img.icons8.com/ios/50/FFFFFF/exit--v2.png" alt="exit--v2" />Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content newContent" style="margin-left: 20%; padding: 1rem;">
+        @RenderBody()
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
