@@ -7,4 +7,18 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <None Remove="Services %28Monolith%29\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services %28Monolith%29\" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Images\password-manager-logo-img.png" />
+    <Content Remove="wwwroot\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\Images\password-manager-logo-img.png" />
+  </ItemGroup>
 </Project>
